@@ -6,12 +6,12 @@ import java.util.Date;
 enum Status {Draft, Published, PendingReview};
 
 
-public class WordpressPage {
+public class WordpressPage implements IPublish{
 
     static ArrayList<WordpressPage> wpp = new ArrayList<>();
     static int pagecount = 0;
     String title = "Titlu pagina";
-    String content = "Page content";
+    public String content = "Page content";
     Status status = Status.Draft;
     boolean isVisible = true;
     Date publishDate = new Date();
@@ -19,7 +19,7 @@ public class WordpressPage {
     int viewCount = 5;
     WordpressPage child;
     WordpressPage parent;
-    private int id = 1;
+    public int id = 1;
 
     public WordpressPage(String title, String content) {
         pagecount++;
@@ -27,6 +27,10 @@ public class WordpressPage {
         this.id = pagecount;
         this.title = title;
         this.content = content;
+
+    }
+
+    public WordpressPage() {
 
     }
 
@@ -54,8 +58,19 @@ public class WordpressPage {
     }
 
     public void publish() {
+        setStatus(Status.Published);
         System.out.println(publishDate);
         System.out.println(status);
+    }
+
+    @Override
+    public void unpublish() {
+        setStatus(Status.Draft);
+    }
+
+    @Override
+    public boolean isPublished() {
+        return status == Status.Published;
     }
 
     public void setPendingreview() {
@@ -115,4 +130,19 @@ public class WordpressPage {
         }
     }
 
+    static public ArrayList<WordpressPage> doSort (ArrayList<WordpressPage> list) {
+        ArrayList<WordpressPage> newList = new ArrayList();
+        while (list.size() > 0){
+            WordpressPage min = list.get(0);
+            for (int i = 1; i < list.size(); i++){
+                if (min.content.compareTo(list.get(i).content) > 0){
+                    min = list.get(i);
+                }
+            }
+            list.remove(min);
+            newList.add(min);
+        }
+        return newList;
+    }
 }
+
