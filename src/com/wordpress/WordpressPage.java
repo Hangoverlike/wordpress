@@ -11,7 +11,7 @@ public class WordpressPage {
     static ArrayList<WordpressPage> wpp = new ArrayList<>();
     static int pagecount = 0;
     String title = "Titlu pagina";
-    String content = "Page content";
+    public String content = "Page content";
     Status status = Status.Draft;
     boolean isVisible = true;
     Date publishDate = new Date();
@@ -115,4 +115,19 @@ public class WordpressPage {
         }
     }
 
+    static public ArrayList<WordpressPage> doSort (ArrayList<WordpressPage> list) {
+        ArrayList<WordpressPage> newList = new ArrayList();
+        while (list.size() > 0){
+            WordpressPage min = list.get(0);
+            for (int i = 1; i < list.size(); i++){
+                if (min.content.compareTo(list.get(i).content) > 0){
+                    min = list.get(i);
+                }
+            }
+            list.remove(min);
+            newList.add(min);
+        }
+        return newList;
+    }
 }
+
