@@ -1,14 +1,9 @@
 package com.wordpress;
 
-public class PasswordVisibility extends WordpressVisibility {
+public class PasswordVisibility extends PrivateVisibility {
 
     public String password;
 
-
-    @Override
-    public boolean isVisibleBy(AcessLevel level) {
-        return true;
-    }
 
     @Override
     public boolean canView(String password) {

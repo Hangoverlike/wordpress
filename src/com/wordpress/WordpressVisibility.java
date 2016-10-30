@@ -17,3 +17,4 @@ public abstract class WordpressVisibility {
         return isVisibleBy(AcessLevel.Anyone);
     }
 }
+ 
