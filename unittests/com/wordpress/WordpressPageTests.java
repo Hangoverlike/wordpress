@@ -1,10 +1,7 @@
 package com.company;
 
 
-import com.wordpress.IPublish;
-import com.wordpress.WordpressComment;
-import com.wordpress.WordpressPage;
-import com.wordpress.WordpressPost;
+import com.wordpress.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -52,9 +49,37 @@ public class WordpressPageTests {
         testPublish(published);
 
     }
+
     @Test
     public void testPublished2(){
         IPublish published = new WordpressComment();
         testPublish(published);
     }
+
+    @Test
+    public void testPageVisibilityPublic(){
+        WordpressVisibility visible = new PublicVisibility();
+
+        Assert.assertTrue(visible.isInFeed());
+        Assert.assertTrue(visible.canBeSearched());
+    }
+
+    @Test
+    public void testPageVisibilityPrivate(){
+        WordpressVisibility visible = new PrivateVisibility();
+
+        Assert.assertFalse(visible.isInFeed());
+        Assert.assertFalse(visible.canBeSearched());
+    }
+
+    @Test
+    public void testPageVisibilityPassword(){
+        PasswordVisibility visible = new PasswordVisibility();
+
+        visible.password = "test";
+
+        Assert.assertTrue(visible.canView("test"));
+        Assert.assertFalse(visible.canView("test2"));
+    }
+
 }
